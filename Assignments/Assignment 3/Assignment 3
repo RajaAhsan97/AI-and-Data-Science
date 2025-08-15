@@ -1,0 +1,45 @@
+Assignment # 02: Functions and Data Structure (List)
+
+Objective:
+To help you understand:
+-	The use and implementation of functions in programming and the execution mechanism of recursive function. 
+-	To familiarize with the list Data Structure and its built-in functions in Python
+
+Part 1: Function 
+1.	Write a function named “Greetings” that takes user’s name and print greeting.
+Output:       Welcome to SMIT training center, Ahsan 
+2.	Write a function that takes a number as argument and check if a given number is positive, negative or zero.
+3.	Write a function to take two numbers as arguments and return the larger number.
+4.	Write a function to take three numbers as argument and return the largest number.
+5.	Write a function to take user’s age as argument and return the message from the function whether he is minor, adult or senior citizen:
+a.	Minor age is less than 18.
+b.	Adult age is greater than 18 and less than 60
+c.	Senior citizen age is greater than 60
+6.	Write a function to take integer as argument and check if it is even or odd.
+7.	Write a function to take number as argument and return the square of that number.
+8.	Write a function to compute the area and circumference of the circle and return the computed results.
+9.	Write a function to take user’s score as argument and determine if they pass or fail (pass if score is above 60, otherwise fails.)
+10.	Write a function that evaluates if an input number is prime.
+11.	Write a function to compute factorial of a given number using recursion technique.
+
+Part-2: Data Structures (List)
+1.	Create a list to store student data i.e. name, age, course and is_attending. Display each element of list using for loop.
+List = [“Tahir”, 44, “AI and Data Science”, True]
+2.	Write a code to separate strings, numbers and Boolean data from the above list into separate lists.
+3.	Create a list [“apple”, “raspberry”, “pineapple”, “cherry”]. 
+a.	 How can you check if apple is present in the list and get the index of the element (if present)
+b.	Now replace the raspberry and pineapple with orange.
+c.	Insert “apricot” at index 2.
+d.	Extend the resulting list with items “car”, “bike”, “aeroplane”.
+4.	Write a code to get first and second best scores from the list:
+Scores_list = [40, 89, 90, 89, 23, 90, 50]
+5.	Create a list [32,54,66,11,77,10,90]
+a.	Remove items from the list with values less than 20.
+b.	Sort the list in ascending and descending order.
+c.	Now, compute the average value of the list items.
+6.	From the given list:
+Gadgets = [“Mobile”, “Laptop”, 10.0, “Marker”, 3, 10, “Speakers”, “Camera”, 310.25]
+a.	Create separate list of string and numbers,
+b.	Sort the string list in ascending and descending order
+c.	Sort the string list by length of elements in the list
+d.	Sort the numbers list in ascending and descending order
