@@ -90,3 +90,107 @@
 ##print("Line2: ", data[1])
 ##
 ##file.close()
+
+### ---------------------------------------------------
+### Section 6: ---------------------------------------------------------------------------------------
+### open a file, if file not exist then creates it and write data to it
+### ---------------------------------------------------
+##with open("sample file1.txt", mode="w") as f:
+##    data = "Python Programming Fundamentals (PPF)"   # data to write
+##    f.write(data)
+##
+##
+### Now view new data
+##with open("sample file1.txt", mode="r") as f:
+##    new_data = f.read()
+##    print("New data: ", new_data)
+    
+### ---------------------------------------------------
+### Section 7: ---------------------------------------------------------------------------------------
+### open a file, if file exists, then overwrite data in it
+### ---------------------------------------------------
+##with open("sample file1.txt", mode="w") as f:
+##    data = "Now we are..."
+##    f.write(data)
+##
+### Now view the new data
+##with open("sample file1.txt", mode="r") as f:
+##    data = f.read()
+##    print(data)
+
+
+### ---------------------------------------------------
+### Section 8: ---------------------------------------------------------------------------------------
+### open an existing file, and write lines from a list of strings
+### ---------------------------------------------------
+##with open("sample file1.txt", mode="w") as f:
+##    data = ["line1\n", "line2\n", "line3"]
+##    f.writelines(data)
+
+### ---------------------------------------------------
+### Section 7: ---------------------------------------------------------------------------------------
+### open a file, and append data to the end of file
+### ---------------------------------------------------
+##with open("sample file1.txt", mode="a") as f:
+##    data = "this line is appended to the end of file"
+##    f.write(data)
+
+### ---------------------------------------------------
+### Section 8: ---------------------------------------------------------------------------------------
+### open a file, and append data to the end of file using writelines
+### ---------------------------------------------------
+##with open("sample file1.txt", mode="a") as f:
+##    data = ["\nnew line1\n", "new line2"]
+##    f.writelines(data)
+
+
+### ---------------------------------------------------
+### Section 9:  r+ (read write) ---------------------------------------------------------------------
+### open a file (file must exist), then Read and write
+### It allows you to read and write without erasing whole file content (unlike 'w')
+### ---------------------------------------------------
+##
+##with open("sample file1.txt", mode="r+") as f:
+##    existing_data = f.read()
+##    print("Before write:")
+##    print(existing_data)
+##
+##    new_data = "\nThe quick brown fox jumps over the lazy Dog."
+##    f.write(new_data)
+##
+##    # set pointer to the begining of the file
+##    f.seek(0)
+##
+##    modified_data = f.read()
+##    print("Updated data:")
+##    print(modified_data)
+
+
+### ---------------------------------------------------
+### Section 10: w+ (write read) ----------------------------------------------------------------------
+### creates a file if not exist, otherwise open a file and overwrite it
+### ---------------------------------------------------
+##with open("sample file1.txt", mode="w+") as f:
+##    f.write("This is the example of w+ mode")
+##
+##    # set pointer to the begining of the file
+##    f.seek(0)
+##
+##    data = f.read()
+##    print(data)
+
+
+### ---------------------------------------------------
+### Section 11: a+  (append and read) ---------------------------------------------------------------
+### Create file if not exist, otherwise append at the end of file
+### ---------------------------------------------------
+##with open("sample file1.txt", mode="a+") as f:
+##    f.write("this is the example of a+ mode")
+##
+##    # set pointer to the begining of the file
+##    f.seek(0)
+##
+##    # read content
+##    data = f.read()
+##    print(data)
+
