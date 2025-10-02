@@ -1,4 +1,4 @@
-Django Polling App Tutorial - For Beginners
+Django project setup Tutorial - For Beginners
 
 -------------------------------------------------------------------------------------------------------------
 Step 1: Creating a virtual environment: A virtual environment keeps all the packages for your project in one 
@@ -21,109 +21,89 @@ Step 3: Install Django in virtual environment
 
 -------------------------------------------------------------------------------------------------------------
 Step 4: Creating a Project in Django
+
 	django-admin startproject <your_project_name>
 -------------------------------------------------------------------------------------------------------------
 
 -------------------------------------------------------------------------------------------------------------
 Step 5: Set path to your django project
+
 	cd <your_project_name>
 -------------------------------------------------------------------------------------------------------------
 
 -------------------------------------------------------------------------------------------------------------
 Step 6: Creating app in Django project
-	python manage.py startapp polls
+
+	python manage.py startapp <your_app_name>
 -------------------------------------------------------------------------------------------------------------
 
 -------------------------------------------------------------------------------------------------------------
 Step 7: make migrations
+
 	python manage.py makemigrations
 	python manage.py migrate
 -------------------------------------------------------------------------------------------------------------
 
 -------------------------------------------------------------------------------------------------------------
-Step 8: run server
-	python manage.py runserver
--------------------------------------------------------------------------------------------------------------
-
--------------------------------------------------------------------------------------------------------------
-Step 8: Add your app to INSTALLED_APPS in settings.py file
+Step 8: Add your app to INSTALLED_APPS in settings.py file of your project directory
 	INSTALLED_APPS = [
 		# default apps
 		"polls"
 	]
+
+-------------------------------------------------------------------------------------------------------------
+
+-------------------------------------------------------------------------------------------------------------
+Step 10: open views.py file of your app and add this code in it.
+
+	from django.http import HttpResponse
 	
-Django's Default TEMPLATE setting has "APP_DIRS=TRUE"  --> templates places in polls/templates/polls/
--------------------------------------------------------------------------------------------------------------
-
--------------------------------------------------------------------------------------------------------------
-Step 9: Models (database Layer)
-
-Define dataBase Tables Structure in your app/models.py
-
--------------------------------------------------------------------------------------------------------------
-
--------------------------------------------------------------------------------------------------------------
-Step 9: Create migrations and apply them 
-	python manage.py makemigrations polls
-	python manage.py migrate
--------------------------------------------------------------------------------------------------------------
-
--------------------------------------------------------------------------------------------------------------
-Step 10: Admin: Let Instructors/Students add questions via Django admin
-	Goto polls/admin.py
--------------------------------------------------------------------------------------------------------------
-
--------------------------------------------------------------------------------------------------------------
-Step 11: Create SuperUser
-	python manage.py createsuperuser
+	# 
+	def index(request):    # you can use any other function name
+		return HttpResponse("Welcome...")
 	
-	Then --> python manage.py runserver
-	
-	And --> Goto Browser and type http://127.0.0.1:8000/admin
-	
-	YOU CAN SEE THE ADMIN PANEL and THEN Fill YOUR <USERNAME> and <PASSWORD>
 -------------------------------------------------------------------------------------------------------------
 
 -------------------------------------------------------------------------------------------------------------
-Step 12: create poll/urls.py
-add this code in urls.py
-===========================================================================
+Step 11: Now create urls.py file in your app (i.e. polls) and write this code in it
+
 	from django.urls import path
-	from . import views
-
-	app_name = 'polls'
+	from . import views         # It means that from your app folder import views.py file
+	
+	app_name = "polls"
+	
 	urlpatterns = [
-		path('', views.index, name='index'),
-		path('<int:question_id>/', views.detail, name='detail'),
-		path('<int:question_id>/results/', views.results, name='results'),
-		path('<int:question_id>/vote/', views.vote, name='vote'),
+		path("index/", views.index, name="index")
 	]
-===========================================================================
-
-include polls urls for project poll_project/urls.py
-
-===========================================================================
-from django.contrib import admin
-from django.urls import include, path
-
-urlpatterns = [
-    path('polls/', include('polls.urls')),
-    path('admin/', admin.site.urls),
-]
-===========================================================================
 -------------------------------------------------------------------------------------------------------------
 
 -------------------------------------------------------------------------------------------------------------
-Step 13: Now implement views (i.e detail, result, index of your poll app)
+Step 12: Now you have to include your app urls into your project urls 
+		 Open urls.py file of your project and modify the code to this
+
+	from django.contrib import admin
+	from django.urls import path, include
+	
+	urlpatterns = [
+		path("admin/", admin.site.urls)
+		path("", include("polls.urls"))
+	]
+	
+	Note: include("polls.urls") --> means to include urls.py file into your project
+-------------------------------------------------------------------------------------------------------------
+
+
+-------------------------------------------------------------------------------------------------------------
+Step 13: Now run your django server from terminal by using this command
+	
+	python manage.py runserver 
 -------------------------------------------------------------------------------------------------------------
 
 -------------------------------------------------------------------------------------------------------------
-Step 14: Now implement your index.html, result.html and detail.html
+Step 14: Copy the url from your terminal --> Open your browser paste url in it
+	
+	http://127.0.0.1:8000/admin/    --> This will open default administration panel of django
+	
+	http://127.0.0.1:8000/index/    --> This will open the page displaying "Welcome" 
 -------------------------------------------------------------------------------------------------------------
 
--------------------------------------------------------------------------------------------------------------
-Step 15: Run and Test Manually
-	Visit Admin: http://127.0.0.1:8000/admin/ — To add Questions & Choices.
-
-	Visit Polls index: http://127.0.0.1:8000/polls/ — To vote the Poll Question and view votes.
--------------------------------------------------------------------------------------------------------------
