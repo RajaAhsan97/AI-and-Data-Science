@@ -1,0 +1,136 @@
+{
+  "name": "Email Workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "inputSource": "passthrough"
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -240,
+        -112
+      ],
+      "id": "90ad1ebd-c784-4f17-bd71-3d6402038137",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.query }}",
+        "options": {
+          "systemMessage": "You are a professional email assistant with access to Gmail.\n\nYou can perform these actions:\n- SEND new emails  \n\nRULES:\n- When sending, extract the recipient email address from the user's request\n- Write emails in a professional and polite tone\n- Keep emails concise and clear\n- NEVER send or reply without confirming you have the correct recipient\n- Return a confirmation message after every action (sent/replied/read)\n\nOUTPUT:\n- After sending: \"Email sent successfully to <recipient>\"\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        -32,
+        -112
+      ],
+      "id": "3dd1e405-5a97-4b77-9fa2-13e96a9b03d4",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        -176,
+        96
+      ],
+      "id": "02984553-1bed-4e47-add1-dd1bcb4fef9c",
+      "name": "OpenRouter Chat Model",
+      "credentials": {
+        "openRouterApi": {
+          "id": "XeQHCXgajNfsV57B",
+          "name": "OpenRouter account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('To', ``, 'string') }}",
+        "subject": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Subject', ``, 'string') }}",
+        "message": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Message', ``, 'string') }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmailTool",
+      "typeVersion": 2.2,
+      "position": [
+        224,
+        112
+      ],
+      "id": "c176b3a1-2f93-403a-bbc7-f8b0bd548862",
+      "name": "Send",
+      "webhookId": "0b2e56be-5b00-482b-aafe-81eed9a2efb8",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "VojoUwQYcGUbY6xQ",
+          "name": "Gmail account"
+        }
+      }
+    }
+  ],
+  "pinData": {
+    "When Executed by Another Workflow": [
+      {
+        "json": {
+          "query": "send email to kabeer.panja1@gmail.com, asking him to attend email"
+        }
+      }
+    ]
+  },
+  "connections": {
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "61fdce29-ddcb-48a6-9661-a1164b04f4a9",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "3773ebb2b0e4f454082469e22c03b5fca181f220a84c17d3e483c5a018e5c04a"
+  },
+  "nodeGroups": [],
+  "id": "B46ru38HW4vYlwMZ",
+  "tags": []
+}

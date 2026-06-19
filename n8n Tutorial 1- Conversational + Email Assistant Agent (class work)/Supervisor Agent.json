@@ -1,0 +1,188 @@
+{
+  "name": "Supervisor Agent",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        -64,
+        -16
+      ],
+      "id": "7e2fc095-5302-4f4d-8bc2-60bf3ab699ef",
+      "name": "When chat message received",
+      "webhookId": "8d7b4406-9858-49c9-9d8e-f8fb4358f2ef"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "# ROLE\nYou are an AI Agent named Junaid\nYour job is to orchestrate teh activities between different agents and then formulate the friendly response back to the user.\nYou should never write emails, create content, create summaries yourself. Your job is to call agents and tools in a correct sequence.\nThink carefully about the sequence of events. Some tools might require you to first call another tool in order to pass it the correct information"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        144,
+        -16
+      ],
+      "id": "a7a02378-a04e-4ef7-a843-9b7074835522",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.4,
+      "position": [
+        160,
+        192
+      ],
+      "id": "8e007961-e951-4bd3-bbe1-5b1e2bed87c1",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "model": "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        16,
+        192
+      ],
+      "id": "f138de7e-d923-4401-9775-c6dbe76cb4d0",
+      "name": "OpenRouter Chat Model",
+      "credentials": {
+        "openRouterApi": {
+          "id": "XeQHCXgajNfsV57B",
+          "name": "OpenRouter account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Use this tool only when external information is required.\nAfter receiving search result, provide the answer to the user.\nDo not search again for the same question",
+        "q": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Search_Query__q_', ``, 'string') }}",
+        "additionalFields": {},
+        "requestOptions": {}
+      },
+      "type": "n8n-nodes-serpapi.serpApiTool",
+      "typeVersion": 1,
+      "position": [
+        368,
+        192
+      ],
+      "id": "714e5e6b-9cdd-4b4a-8b94-233fe3d0ff8a",
+      "name": "Google search in SerpApi",
+      "credentials": {
+        "serpApi": {
+          "id": "S0xylZMu3MS0kZ9D",
+          "name": "SerpApi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "description": "Use this this tool for email related task",
+        "workflowId": {
+          "__rl": true,
+          "value": "B46ru38HW4vYlwMZ",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/B46ru38HW4vYlwMZ",
+          "cachedResultName": "Email Workflow"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.2,
+      "position": [
+        544,
+        192
+      ],
+      "id": "43c9284d-2ec5-41a8-a6e3-1cf6045bb937",
+      "name": "Call 'Email Workflow'"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google search in SerpApi": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call 'Email Workflow'": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "d7c962cd-b0ef-4885-9fd6-806231fe2a8f",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "3773ebb2b0e4f454082469e22c03b5fca181f220a84c17d3e483c5a018e5c04a"
+  },
+  "nodeGroups": [],
+  "id": "AtMy9Q40S4iT6LvQ",
+  "tags": []
+}
